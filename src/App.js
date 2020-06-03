@@ -16,7 +16,7 @@ function App() {
     {
         title: `go-stack-desafio-conceitos-node ${Date.now()}`,
         owner: "Lucas Simas",
-        techs: ["React", "ReactJS", "nodeJS", "typeScript"]
+        techs: ["React", "ReactJS", "nodeJS"]
     });
 
     const project = response.data;
@@ -25,9 +25,12 @@ function App() {
 
   async function handleRemoveRepository(id) { 
     const response = await api.delete(`/repositories/${id}`);
-    setProjects(projects.filter((response) => {
-      return response.id !== id;
-    }));
+    console.log(response)
+    if(response.status === 204){
+      const index = projects.findIndex(response => response.id === id);
+      projects.splice(index, 1)
+      setProjects([...projects])
+    }
   }
 
   return (
